@@ -1,7 +1,7 @@
 //en este archivo vamos a hacer todas las consultas a la base de datos
 
 //definimos la tabla
-const TABLA = 'clientes';
+const TABLA = 'usuarios';
 
 //exporto todas las funciones
 module.exports = function (dbInyectada){

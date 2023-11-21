@@ -6,6 +6,8 @@ const morgan = require('morgan')
 const config = require('./config');
 //  creo la variable clientes
 const clientes = require('./modulos/clientes/rutas')
+//  creo la variable usuarios
+const usuarios = require('./modulos/usuarios/rutas')
 //creo la variable error
 const error = require('./red/error');
 
@@ -22,6 +24,8 @@ app.set('port', config.app.port);
 //agrego las rutas
 app.use('/api/clientes'//y cuando acceda a esta ruta me devolvera mi modulo clientes
         , clientes);
+app.use('/api/usuarios'//y cuando acceda a esta ruta me devolvera mi modulo usuarios
+        , usuarios);
 app.use(error);
 
 module.exports = app;
