@@ -1,5 +1,7 @@
 //exportamos express
 const express = require('express');
+//importo seguridad
+const seguridad = require('./seguridad')
 //importo las respuestas
 const respuesta = require('../../red/respuestas')
 //importo las funciones desde controlador
@@ -12,9 +14,9 @@ const router = express.Router();
 router.get('/', todos);
 router.get('/:id', uno);
 //peticiones post
-router.post('/', agregar);
+router.post('/',agregar);
 //peticiones put
-router.put('/', eliminar);
+router.put('/', seguridad() , eliminar);
 
 
 //definimos la funcion todos

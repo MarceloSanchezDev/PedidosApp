@@ -28,7 +28,7 @@ module.exports = function (dbInyectada){
         const usuario = {
             id: body.id,
             nombre: body.nombre,
-            activo: body.activo
+            rol: body.rol
         }
         //cuadno se ejecuta la funcion agregar, me devuelve por parametro el id en que fue agregado en la base de datos ese registro
         const respuesta = await db.agregar(TABLA, usuario);
