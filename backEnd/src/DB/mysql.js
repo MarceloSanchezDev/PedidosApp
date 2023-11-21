@@ -42,27 +42,71 @@ conMysql();
 
 //creo las funciones
 
+//funciones get
 function todos(tabla){
     return new Promise( (resolve, reject) =>{//iniciamos una promesa
         conexion.query(`SELECT * FROM ${tabla}`, //creamos la query
         (error, result)=>{ //manejamos errores
-            if(error) return reject(error);//si hay un error que me lo retorne por *reject*
+         return error ? reject(error) ://si hay un error que me lo retorne por *reject*
             resolve(result);//sino que me entregue el resultado
         })
     } );
 };
 
 function uno(tabla, id){
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`SELECT * FROM ${tabla} WHERE id=${id}`, //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result);//sino que me entregue el resultado
+        })
+    } );
+};
 
+//funciones post
+
+function insertar(tabla, data){
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`INSERT INTO ${tabla} SET ?`, data, //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result);//sino que me entregue el resultado
+        })
+    } );
+};
+
+function actualizar(tabla, data){
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`UPDATE ${tabla} SET ? WHERE id = ?`,[data, data.id], //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result);//sino que me entregue el resultado
+        })
+    } );
 };
 
 function agregar(tabla, data){
-
+    if(data && data.id == 0){ //si viene una data y el id de la data es igual a 0 es por que el registro es nuevo
+        return insertar(tabla, data); // entonces retorna la funcion *insertar*
+    }else{ //si el id es un numero que ya existe se actualizara el registro
+        return actualizar(tabla, data);//entonces retorna la funcion *actualizar*
+    }
 };
 
-function eliminar(tabla, id){
+//funciones put
 
+function eliminar(tabla, data){
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`DELETE FROM ${tabla} WHERE id= ?`, data.id, //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result);//sino que me entregue el resultado
+        })
+    } );
 };
+
+
+
 
 module.exports = {
     todos,
