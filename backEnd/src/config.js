@@ -6,7 +6,7 @@ require('dotenv').config();
 module.exports = {
     //creamos un objeto llamado app
     app: {//creamos un puerto
-        port : process.env.PORT ,
+        port : process.env.PORT || 4000,
     }
 }
 
