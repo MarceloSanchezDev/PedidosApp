@@ -8,6 +8,10 @@ module.exports = {
     app: {//creamos un puerto
         port : process.env.PORT || 4000,
     },
+    //creamos un objeto llamado jwt
+    jwt:{
+        secret: process.env.JET_SECRET || 'notasecreta!'
+    },
     //cremos otro objeto llamado mysql
     mysql:{
         host: process.env.MYSQL_HOST || 'localhost',// el hosto va a ser el definido o *localhost*

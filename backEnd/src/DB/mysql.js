@@ -65,33 +65,26 @@ function uno(tabla, id){
 
 //funciones post
 
-function insertar(tabla, data){
-    return new Promise( (resolve, reject) =>{//iniciamos una promesa
-        conexion.query(`INSERT INTO ${tabla} SET ?`, data, //creamos la query
-        (error, result)=>{ //manejamos errores
-            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
-            resolve(result);//sino que me entregue el resultado
-        })
-    } );
-};
-
-function actualizar(tabla, data){
-    return new Promise( (resolve, reject) =>{//iniciamos una promesa
-        conexion.query(`UPDATE ${tabla} SET ? WHERE id = ?`,[data, data.id], //creamos la query
-        (error, result)=>{ //manejamos errores
-            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
-            resolve(result);//sino que me entregue el resultado
-        })
-    } );
-};
-
 function agregar(tabla, data){
-    if(data && data.id == 0){ //si viene una data y el id de la data es igual a 0 es por que el registro es nuevo
-        return insertar(tabla, data); // entonces retorna la funcion *insertar*
-    }else{ //si el id es un numero que ya existe se actualizara el registro
-        return actualizar(tabla, data);//entonces retorna la funcion *actualizar*
-    }
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`INSERT INTO ${tabla} SET ? ON DUPLICATE KEY UPDATE ?`,[data, data], //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result);//sino que me entregue el resultado
+        })
+    } );
 };
+
+function query(tabla, consulta){
+    return new Promise( (resolve, reject) =>{//iniciamos una promesa
+        conexion.query(`SELECT * FROM ${tabla} WHERE ?`,consulta, //creamos la query
+        (error, result)=>{ //manejamos errores
+            return error ? reject(error) ://si hay un error que me lo retorne por *reject*
+            resolve(result[0]);//sino que me entregue el resultado en la posicion 0
+        })
+    } );
+};
+
 
 //funciones put
 
@@ -112,5 +105,6 @@ module.exports = {
     todos,
     uno,
     agregar,
-    eliminar
+    eliminar,
+    query
 }

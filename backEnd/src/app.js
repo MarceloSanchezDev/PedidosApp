@@ -8,6 +8,8 @@ const config = require('./config');
 const clientes = require('./modulos/clientes/rutas')
 //  creo la variable usuarios
 const usuarios = require('./modulos/usuarios/rutas')
+//  creo la variable auth
+const auth = require('./modulos/auth/rutas')
 //creo la variable error
 const error = require('./red/error');
 
@@ -26,6 +28,8 @@ app.use('/api/clientes'//y cuando acceda a esta ruta me devolvera mi modulo clie
         , clientes);
 app.use('/api/usuarios'//y cuando acceda a esta ruta me devolvera mi modulo usuarios
         , usuarios);
+app.use('/api/auth'//y cuando acceda a esta ruta me devolvera mi modulo usuarios
+        , auth);
 app.use(error);
 
 module.exports = app;
