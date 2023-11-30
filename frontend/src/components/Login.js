@@ -51,7 +51,7 @@ const Login = () => {
             }else{
                 navigate('/')
             }          
-      }, [userFound]);
+      }, [userFound, navigate]);
 
 
 
