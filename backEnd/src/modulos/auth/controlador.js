@@ -14,6 +14,10 @@ module.exports = function (dbInyectada){
     if(!db){//si la base de datos esta corrupta
         db = require('../../DB/mysql') //la busco directamente desde el archivp *mysql*
     }
+//definimos la funcion todos
+function todos (){
+    return db.todos(TABLA);
+};
       
 //definimos las funciones
 async function login(usuario, password) { //defino la funcion login que tiene como parametro un usuario y contraseña
@@ -34,7 +38,8 @@ async function login(usuario, password) { //defino la funcion login que tiene co
    async function agregar(data){
         //creo la constate authData
         const authData = {
-            id: data.id //que va a tener el id que recibe del parameto
+            id: data.id, //que va a tener el id que recibe del parameto
+            rol: data.rol
         }
         if(data.usuario){//si *data.usuario* es verdadero
             authData.usuario = data.usuario; //se lo asigna a * authData.usuario*
@@ -51,6 +56,7 @@ async function login(usuario, password) { //defino la funcion login que tiene co
  
         return{
             agregar,
-            login
+            login,
+            todos,
         }
 }

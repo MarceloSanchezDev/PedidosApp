@@ -1,11 +1,7 @@
-const SERVICES_CONFIG = {
-    baseUrl: 'http://localhost',
-    port: ':4000',
-    path: '/api/auth/login',
-  };
-  
-  export async function getUsers() {
-    const endpoint = `${SERVICES_CONFIG.baseUrl}${SERVICES_CONFIG.port}${SERVICES_CONFIG.path}`;
+
+export async function getUsers() {
+  const endpoint = 'http://localhost:4000/api/auth';
+  try {
     const response = await fetch(endpoint, {
       method: 'GET',
       mode: 'cors',
@@ -16,6 +12,13 @@ const SERVICES_CONFIG = {
       },
       referrerPolicy: 'no-referrer',
     });
-    return response; 
-  };
-   
+
+    if (!response.ok) {
+      throw new Error(`Server responded with status ${response.status}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    throw new Error(`Error fetching data: ${error.message}`);
+  }
+};

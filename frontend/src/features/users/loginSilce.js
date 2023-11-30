@@ -1,25 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+const initialState = {
+  users: [], // Aquí almacenarás los usuarios obtenidos
+  userFound: null,
+};
+
+
+
+
 export const usersSlice = createSlice({
     name: 'users',// nombre de la accion
-    initialState : [],
+    initialState,
     reducers :{//aqui vamos a poder crear funciones para poder actualizar el estado inicial.
-        //estas funciones las vamos a poder user en cualquier parte de la aplicacion
-        userLog: (state /*accede al estado actual*/,action) =>{
-            const userFound = state.users.find(user => user.username === action.payload.username && user.password === action.payload.password) // encuentra el usuario dentro del arreglo *users*
-            if(userFound){//si el usuario es encontrado 
-                state.userFound = userFound; //establezo el nuevo estado a *userFound*
-            }else{
-                console.log("no se encontro el user")//sino manda este mensaje
-                state.userFound = null; // dejo como estaba *userFound*
-            }
-        },
-        userSesionOut: (state) => {
-            state.userFound = null; // Establecer el estado de userFound a null
-          },
+      //estas funciones las vamos a poder user en cualquier parte de la aplicacion
+      getUsersSuccess: (state, action) => {
+        state.users = action.payload; // Guardar los usuarios obtenidos en el estado
+      },
+      userLog: (state/*accede al estado actual*/, action) => {
+        console.log(action.payload.username)
+        const userFound = state.users.find(user => user.usuario === action.payload.username) // encuentra el usuario dentro del arreglo *users*
+        if(userFound){
+        state.userFound = userFound;
+        console.log(userFound);
+        }else{
+          console.log("no se encotro usuario")
+        }
+      },
+      
     }
 });
 
 
-export const {userLog, userSesionOut} = usersSlice.actions;
+export const {userLog, getUsersSuccess , userFound} = usersSlice.actions;
 export default usersSlice.reducer; 

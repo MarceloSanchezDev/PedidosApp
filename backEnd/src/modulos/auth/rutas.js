@@ -9,6 +9,18 @@ const controlador = require('./index');
 const router = express.Router();
 
 router.get('/login', login);
+router.get('/', todos);
+
+//definimos la funcion todos
+async function todos(req, res, next){
+    try{ // que intente esto
+        const items = await controlador.todos();//especificamos que espera *controlador.todos()*
+            respuesta.success(req, res, items, 200);// y luego lo mande
+    } catch(err){ //que si hay un error lo muestre
+         //utilizamos next que es una funcion de express.
+        next(err);
+    } 
+};
 
 async function login(req, res, next){
     try{

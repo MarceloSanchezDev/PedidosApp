@@ -1,5 +1,6 @@
 // creo la variable express que contiene express.
 const express = require('express');
+const cors = require('cors')
 //creo la variable morgan que contiene *morgan*
 const morgan = require('morgan')
 // creo la variable config que contiene todas las funciones del archivo ./config
@@ -20,6 +21,7 @@ const app = express();
 app.use(morgan('dev'));//utilizarmeos morgan en el entorno de desarrollo.
 app.use(express.json());//para que reconosca el formato json
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 //defino la constante del puerto, configurandolo
 app.set('port', config.app.port);
