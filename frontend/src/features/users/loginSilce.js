@@ -27,10 +27,12 @@ export const usersSlice = createSlice({
           console.log("no se encotro usuario")
         }
       },
-      
+      userSesionOut: (state) => {
+        state.userFound = null; // Establecer el estado de userFound a null
+      }
     }
 });
 
 
-export const {userLog, getUsersSuccess , userFound} = usersSlice.actions;
+export const {userLog, getUsersSuccess , userSesionOut,  userFound} = usersSlice.actions;
 export default usersSlice.reducer; 

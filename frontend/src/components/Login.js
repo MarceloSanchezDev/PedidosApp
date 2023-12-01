@@ -42,7 +42,7 @@ const Login = () => {
       //verifico si el usuario y contraseña existen en el array.
       useEffect(() => { //utulizo el hook useEffect para renderizar algo si cambia el estado de 
         // Esta parte del código se ejecuta cuando el estado se actualiza
-        if (userFound && userFound !== null) {
+        if (userFound !== null) {
                 if(userFound.rol === 1){
                     navigate('/pagAdmin')    
                 } else {
@@ -51,7 +51,7 @@ const Login = () => {
             }else{
                 navigate('/')
             }          
-      }, [userFound, navigate]);
+      }, [navigate, userFound]);
 
 
 

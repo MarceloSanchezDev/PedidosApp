@@ -1,36 +1,49 @@
 import React from "react";
 import Accordion from 'react-bootstrap/Accordion';
+import { useEffect } from "react";
+import { getOrders } from "./../consultasBack"
+import { useDispatch } from 'react-redux'; // *useDispatch* es para hacer algo, son las funciones que queremos llamar para actualizar el estado.
+import { getOrderSuccess } from "../features/orders/orderSlice";
+import { useSelector } from 'react-redux/es/hooks/useSelector';// *useSelector* es para traer algo, es la forma en la que podemos traer los datos dentro del estado.
 
-const Orders =  () =>{
 
 
-    
+const Orders =  () =>{  
+    const dispatch = useDispatch();
+    const orders = useSelector(state => state.orders);
+    const userFound = useSelector(state => state.users.userFound);
+    console.log(userFound);
+    useEffect(()=>{
+      const obtenerDatosOrder = async () => {
+        try {
+          const response = await getOrders();
+          const data = await response;
+          if(data){
+            console.log(data.body)
+            dispatch(getOrderSuccess(data.body));
+          }
+        } catch (error) {
+          console.error(`Error al obtener datos del usuario: ${error.message}`);
+        }
+      };
+      obtenerDatosOrder();
+    }, [dispatch])
+
     return(
+      
         <Accordion defaultActiveKey={['0']} alwaysOpen>
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Accordion Item #1</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          { userFound.rol ===  1 && orders.map(order => (
+            <>
+             <Accordion.Item key={order.id} eventKey={order.id -1}>
+            <Accordion.Header>ID del usuario : {order.userId}</Accordion.Header>
+            <Accordion.Body>
+          <h3> Nombre del Cliente : {order.nombre}</h3>
+          <h3>Nombre del Producto : {order.producto}</h3>
           </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Accordion Item #2</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-            minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
+          </Accordion.Item>
+          </>
+          ))}
+          
       </Accordion>
     )
 }
