@@ -28,7 +28,8 @@ export const usersSlice = createSlice({
         }
       },
       userSesionOut: (state) => {
-        state.userFound = null; // Establecer el estado de userFound a null
+        state.userFound = null;
+        console.log(state.userFound); // Establecer el estado de userFound a null
       }
     }
 });

@@ -8,16 +8,16 @@ const Orders =  () =>{
     console.log(userFound)
     const orders = useSelector(state => state.orders[0])
     console.log('Datos de los pedidos:', orders);
-    const orderUser = orders.filter(order => order.userId == userFound.id)
+    const orderUser = orders.filter(order => order.userId === userFound.id)
     console.log(orderUser);
     
     return(
       
         <Accordion defaultActiveKey={['0']} alwaysOpen>
-          { userFound !== null && userFound.id !== undefined && userFound.rol ==  1 && orders.map(order => (
+          { userFound !== null && userFound.id !== undefined && userFound.rol ===  1 && orders.map(order => (
             
               <Accordion.Item key={order.id} eventKey={order.id }>
-                  <Accordion.Header>ID del usuario : {order.userId}</Accordion.Header>
+                  <Accordion.Header>Id del usuario : {order.userId}</Accordion.Header>
                   <Accordion.Body>
                       <h3> Nombre del Cliente : {order.nombre}</h3>
                       <h3>Nombre del Producto : {order.producto}</h3>
@@ -26,13 +26,14 @@ const Orders =  () =>{
               </Accordion.Item>
           
           ))}
-          {userFound !== null && userFound.id !== undefined && userFound.rol == 0 && orderUser.map(order => (
+          {userFound !== null && userFound.id !== undefined && userFound.rol === 0 && orderUser.map(order => (
             
               <Accordion.Item key={order.id} eventKey={order.id}>
-                  <Accordion.Header>ID del usuario : {order.userId}</Accordion.Header>
+                  <Accordion.Header>Id del usuario: {order.userId}</Accordion.Header>
                   <Accordion.Body>
                       <h3> Nombre del Cliente : {order.nombre}</h3>
                       <h3>Nombre del Producto : {order.producto}</h3>
+                      <p>Id del usuario : {order.userId}</p>
                       <p>Id del pedido : {order.id}</p>
                   </Accordion.Body>
               </Accordion.Item>
