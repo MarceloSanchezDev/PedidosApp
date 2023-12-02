@@ -2,11 +2,9 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router-dom';//es una funcion que redirecciona el usuario a la ruta indicada.
-import { getUsers } from '../consultasBack';
 import { useDispatch } from 'react-redux'; // *useDispatch* es para hacer algo, son las funciones que queremos llamar para actualizar el estado.
 import { useSelector } from 'react-redux/es/hooks/useSelector';// *useSelector* es para traer algo, es la forma en la que podemos traer los datos dentro del estado.
 import { userLog } from '../features/users/loginSilce'// importo el action *userlog*
-import {getUsersSuccess} from '../features/users/loginSilce'
 
 const Login = () => {
     const [username, setUsername] = useState('');// utilizo el hook useState para cambiar el estado de la variable *username* que inicializa vacia.
@@ -14,24 +12,6 @@ const Login = () => {
     const dispatch = useDispatch() //es una funcion que me permite disparar eventos desde el *Slice*
     const navigate = useNavigate() //es una funcion que redirecciona el usuario a la ruta indicada.
     const userFound = useSelector(state => state.users.userFound)
-
-    useEffect(() => {
-      const obtenerDatosUsuario = async () => {
-          try {
-            const response = await getUsers();
-            const data = await response;
-            if(data){
-              console.log(data.body)
-              dispatch(getUsersSuccess(data.body));
-              console.log(getUsersSuccess(data.body))
-            }
-          } catch (error) {
-            console.error(`Error al obtener datos del usuario: ${error.message}`);
-          }
-        };
-        
-      obtenerDatosUsuario();
-    }, [dispatch]);
     
     const handleSubmit = (e) =>{ //creo la funcion *handleSumit* que recibe por parametro un *evento*.
       e.preventDefault();//evito que el formulario se envie y refresque la pagina para que la funcion *handleSumit* maneje la autenticacion.
@@ -40,7 +20,7 @@ const Login = () => {
       };
 
       //verifico si el usuario y contraseña existen en el array.
-      useEffect(() => { //utulizo el hook useEffect para renderizar algo si cambia el estado de 
+   useEffect(() => { //utulizo el hook useEffect para renderizar algo si cambia el estado de 
         // Esta parte del código se ejecuta cuando el estado se actualiza
         if (userFound !== null) {
                 if(userFound.rol === 1){

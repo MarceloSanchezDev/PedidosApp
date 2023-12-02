@@ -8,7 +8,7 @@ export const orderSlice = createSlice({
     reducers: { //aqui vamos a poder crear funciones para poder actualizar el estado inicial.
         //estas funciones las vamos a poder user en cualquier parte de la aplicacion
         getOrderSuccess: (state, action) => {
-            state.splice(0, state.length, ...action.payload); // Reemplaza el contenido del estado por los nuevos datos
+            state.push(action.payload); // Reemplaza el contenido del estado por los nuevos datos
             console.log(state);
           },
         deleteOrder: (state/*accede al estado actual*/, action) =>{
@@ -25,5 +25,5 @@ export const orderSlice = createSlice({
 });
 
 
-export const {deleteOrder, getOrderSuccess} = orderSlice.actions//desde *orderSlice.actions*
+export const {deleteOrder,getOrderSuccess} = orderSlice.actions//desde *orderSlice.actions*
 export default orderSlice.reducer;//aqui solo exporto los *reducers* de *orderSlice*
